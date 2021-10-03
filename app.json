@@ -1,0 +1,59 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "net.biseth.kona-smart-charge",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "name": {
+    "en": "Kona Smart Charge"
+  },
+  "description": {
+    "en": "Adds Tibber smart charge capabilities to Hyundai KONA"
+  },
+  "category": [
+    "appliances"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "André Biseth",
+    "email": "andre@biseth.net"
+  },
+  "drivers": [
+    {
+      "name": {
+        "en": "Kona"
+      },
+      "class": "other",
+      "capabilities": [
+        "onoff"
+      ],
+      "images": {
+        "small": "/drivers/kona/assets/images/small.png",
+        "large": "/drivers/kona/assets/images/large.png",
+        "xlarge": "/drivers/kona/assets/images/xlarge.png"
+      },
+      "connectivity": [
+        "lan"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "kona"
+    }
+  ]
+}

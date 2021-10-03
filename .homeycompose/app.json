@@ -1,0 +1,25 @@
+{
+  "id": "net.biseth.kona-smart-charge",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "name": {
+    "en": "Kona Smart Charge"
+  },
+  "description": {
+    "en": "Adds Tibber smart charge capabilities to Hyundai KONA"
+  },
+  "category": [
+    "appliances"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "André Biseth",
+    "email": "andre@biseth.net"
+  }
+}
