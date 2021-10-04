@@ -22,38 +22,5 @@
   "author": {
     "name": "André Biseth",
     "email": "andre@biseth.net"
-  },
-  "drivers": [
-    {
-      "name": {
-        "en": "Kona"
-      },
-      "class": "other",
-      "capabilities": [
-        "onoff"
-      ],
-      "images": {
-        "small": "/drivers/kona/assets/images/small.png",
-        "large": "/drivers/kona/assets/images/large.png",
-        "xlarge": "/drivers/kona/assets/images/xlarge.png"
-      },
-      "connectivity": [
-        "lan"
-      ],
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "navigation": {
-            "next": "add_devices"
-          }
-        },
-        {
-          "id": "add_devices",
-          "template": "add_devices"
-        }
-      ],
-      "id": "kona"
-    }
-  ]
+  }
 }
