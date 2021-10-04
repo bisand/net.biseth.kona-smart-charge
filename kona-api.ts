@@ -77,11 +77,12 @@ class KonaAPI {
     }
 
     public async getVehicles(): Promise<EuropeanVehicle[]> {
+        const self = this;
         return new Promise<EuropeanVehicle[]>(async (resolve, reject) => {
-            if (this._client === undefined)
+            if (self._client === undefined)
                 reject('Login before using this method');
             try {
-                const vehicles = await this._client.getVehicles();
+                const vehicles = await self._client.getVehicles();
                 if (vehicles !== undefined)
                     resolve(vehicles);
                 reject('Unable to get vehicles.')
@@ -92,11 +93,12 @@ class KonaAPI {
     }
 
     public async getVehicle(id: string): Promise<EuropeanVehicle> {
+        const self = this;
         return new Promise<EuropeanVehicle>((resolve, reject) => {
-            if (this._client === undefined)
+            if (self._client === undefined)
                 reject('Login before using this method');
             try {
-                const vehicle = this._client.getVehicle(id);
+                const vehicle = self._client.getVehicle(id);
                 if (vehicle)
                     resolve(vehicle);
                 reject('Unable to get vehicle.')

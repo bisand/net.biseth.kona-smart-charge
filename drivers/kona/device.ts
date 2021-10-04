@@ -4,7 +4,7 @@ import KonaAPI from '../../kona-api';
 
 class MyDevice extends Device {
   private _settings: any;
-  private _client: KonaAPI | undefined;
+  private _api!: KonaAPI;
   /**
    * onInit is called when the device is initialized.
    */
@@ -15,10 +15,14 @@ class MyDevice extends Device {
       this.log(onoff);
     });
 
-    this._client = new KonaAPI(this._settings);
-    const vehicle = await this._client.getVehicle(this._settings.vin);
-    const status: VehicleStatus = await vehicle.status({ parsed: true, refresh: false }) as VehicleStatus;
-    this.setCapabilityValue('measure_battery', status.engine.batteryCharge).catch(this.error);
+    try {
+      this._api = new KonaAPI(this._settings);
+      const vehicle = await this._api.getVehicle(this._settings.vin);
+      const status: VehicleStatus = await vehicle.status({ parsed: true, refresh: false }) as VehicleStatus;
+      this.setCapabilityValue('measure_battery', status.engine.batteryCharge).catch(this.error);
+    } catch (error) {
+      this.error(error);
+    }
 
     this.log('MyDevice has been initialized');
   }
