@@ -81,7 +81,7 @@ class KonaAPI {
             if (this._client === undefined)
                 reject('Login before using this method');
             try {
-                const vehicles = await this._client?.getVehicles();
+                const vehicles = await this._client.getVehicles();
                 if (vehicles !== undefined)
                     resolve(vehicles);
                 reject('Unable to get vehicles.')
@@ -96,8 +96,8 @@ class KonaAPI {
             if (this._client === undefined)
                 reject('Login before using this method');
             try {
-                const vehicle = this._client?.getVehicle(id);
-                if (vehicle !== undefined)
+                const vehicle = this._client.getVehicle(id);
+                if (vehicle)
                     resolve(vehicle);
                 reject('Unable to get vehicle.')
             } catch (error) {

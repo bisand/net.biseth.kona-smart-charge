@@ -1,3 +1,4 @@
+require('inspector').open(9229, '0.0.0.0');
 import sourceMapSupport from 'source-map-support';
 sourceMapSupport.install();
 
