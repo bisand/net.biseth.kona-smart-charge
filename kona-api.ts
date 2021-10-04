@@ -90,6 +90,21 @@ class KonaAPI {
             }
         });
     }
+
+    public async getVehicle(id: string): Promise<EuropeanVehicle> {
+        return new Promise<EuropeanVehicle>((resolve, reject) => {
+            if (this._client === undefined)
+                reject('Login before using this method');
+            try {
+                const vehicle = this._client?.getVehicle(id);
+                if (vehicle !== undefined)
+                    resolve(vehicle);
+                reject('Unable to get vehicle.')
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
 }
 
 export default KonaAPI;

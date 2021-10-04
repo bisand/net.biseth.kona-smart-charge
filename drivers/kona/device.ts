@@ -1,10 +1,25 @@
+import { VehicleStatus } from 'bluelinky/dist/interfaces/common.interfaces';
 import { Device } from 'homey';
+import KonaAPI from '../../kona-api';
 
 class MyDevice extends Device {
+  private _settings: any;
+  private _client: KonaAPI | undefined;
   /**
    * onInit is called when the device is initialized.
    */
   async onInit() {
+    this._settings = await this.getSettings();
+
+    this.registerCapabilityListener('onoff', onoff => {
+      this.log(onoff);
+    });
+
+    this._client = new KonaAPI(this._settings);
+    const vehicle = await this._client.getVehicle(this._settings.vin);
+    const status: VehicleStatus = await vehicle.status({ parsed: true, refresh: false }) as VehicleStatus;
+    this.setCapabilityValue('measure_battery', status.engine.batteryCharge).catch(this.error);
+
     this.log('MyDevice has been initialized');
   }
 
@@ -23,7 +38,7 @@ class MyDevice extends Device {
    * @param {string[]} event.changedKeys An array of keys changed since the previous version
    * @returns {Promise<string|void>} return a custom message that will be displayed
    */
-  async onSettings({ oldSettings: {}, newSettings: {}, changedKeys: {} }): Promise<string|void> {
+  async onSettings({ oldSettings: { }, newSettings: { }, changedKeys: { } }): Promise<string | void> {
     this.log('MyDevice settings where changed');
   }
 

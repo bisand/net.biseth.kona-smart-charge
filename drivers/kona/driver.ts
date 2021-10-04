@@ -37,16 +37,17 @@ class KonaDriver extends Driver {
 
       const devices = myDevices.map((myDevice) => {
         return {
-          name: myDevice.name,
+          name: myDevice.name(),
           data: {
-            id: myDevice.id,
+            id: myDevice.vin(),
           },
           settings: {
             // Store username & password in settings
             // so the user can change them later
             username,
             password,
-            pin
+            pin,
+            vin: myDevice.vin()
           },
         };
       });
