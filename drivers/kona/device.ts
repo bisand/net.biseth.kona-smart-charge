@@ -1,3 +1,4 @@
+import BlueLinky from 'bluelinky';
 import { VehicleStatus } from 'bluelinky/dist/interfaces/common.interfaces';
 import { Device } from 'homey';
 import KonaAPI from '../../kona-api';
@@ -16,7 +17,7 @@ class MyDevice extends Device {
     });
 
     try {
-      this._api = new KonaAPI(this._settings);
+      this._api = new KonaAPI(new BlueLinky({ this._settings.username, this._settings.password }));
       const vehicle = await this._api.getVehicle(this._settings.vin);
       const status: VehicleStatus = await vehicle.status({ parsed: true, refresh: false }) as VehicleStatus;
       this.setCapabilityValue('measure_battery', status.engine.batteryCharge).catch(this.error);
