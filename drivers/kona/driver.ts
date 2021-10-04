@@ -1,68 +1,39 @@
 import { Driver } from 'homey';
 import BlueLinky from "bluelinky";
 import PairSession from 'homey/lib/PairSession';
+import KonaAPI from '../../kona-api';
 
-class MyDriver extends Driver {
+class KonaDriver extends Driver {
 
   /**
    * onInit is called when the driver is initialized.
    */
   async onInit() {
-    this.log('MyDriver has been initialized');
-  }
-
-  async getVehicles() {
-
-    return new Promise((resolve, reject) => {
-      const t = setTimeout(() => {
-        reject('Login timed out.');
-      }, 30000);
-
-      const client = new BlueLinky({
-        username: '',
-        password: '',
-        brand: 'hyundai',
-        region: 'EU',
-        pin: ''
-      });
-
-      client.on('ready', async () => {
-        const vehicles = await client.getVehicles();
-        try {
-          resolve(vehicles);
-        } catch (err) {
-          reject(err);
-        }
-      });
-
-      client.on('error', async (err) => {
-        reject(err);
-      });
-    });
+    this.log('KonaDriver has been initialized');
   }
 
   async onPair(session: PairSession) {
-    let username = "";
-    let password = "";
+    let username: string = '';
+    let password: string = '';
+    let pin = '';
 
     session.setHandler("login", async (data) => {
       username = data.username;
       password = data.password;
 
-      const credentialsAreValid = await DeviceAPI.testCredentials({
-        username,
-        password,
-      });
-
-      // return true to continue adding the device if the login succeeded
-      // return false to indicate to the user the login attempt failed
-      // thrown errors will also be shown to the user
+      const credentialsAreValid = await KonaAPI.testCredentials({ username, password, brand: 'hyundai', region: 'EU' });
       return credentialsAreValid;
     });
 
+    session.setHandler("pincode", async (pincode) => {
+      // The pincode is given as an array of the filled in values
+      pin = pincode
+      return true;
+    });
+
     session.setHandler("list_devices", async () => {
-      const api = await DeviceAPI.login({ username, password });
-      const myDevices = await api.getDevices();
+      const api = await KonaAPI.login({ username, password, brand: 'hyundai', region: 'EU', pin });
+      const myDevices = await api.getVehicles();
 
       const devices = myDevices.map((myDevice) => {
         return {
@@ -75,6 +46,7 @@ class MyDriver extends Driver {
             // so the user can change them later
             username,
             password,
+            pin
           },
         };
       });
@@ -103,4 +75,4 @@ class MyDriver extends Driver {
   }
 }
 
-module.exports = MyDriver;
+module.exports = KonaDriver;

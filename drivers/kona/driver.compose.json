@@ -13,20 +13,37 @@
     "large": "{{driverAssetsPath}}/images/large.png",
     "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
   },
-  "connectivity": ["lan"],
+  "connectivity": [
+    "lan"
+  ],
   "pair": [
     {
       "id": "login",
       "template": "login_credentials",
-      "navigation": {
-        "next": "pincode"
+      "options": {
+        "logo": "logo.png",
+        "usernameLabel": {
+          "en": "E-mail address"
+        },
+        "usernamePlaceholder": {
+          "en": "john@doe.com"
+        },
+        "passwordLabel": {
+          "en": "Password"
+        },
+        "passwordPlaceholder": {
+          "en": "Password"
+        }
       }
     },
     {
       "id": "pincode",
       "template": "pincode",
-      "navigation": {
-        "next": "list_devices"
+      "options": {
+        "title": "Enter pincode:",
+        "hint": "Enter the device's pincode",
+        "type": "number",
+        "length": 4
       }
     },
     {

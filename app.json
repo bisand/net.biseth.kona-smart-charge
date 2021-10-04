@@ -44,6 +44,35 @@
       ],
       "pair": [
         {
+          "id": "login",
+          "template": "login_credentials",
+          "options": {
+            "logo": "logo.png",
+            "usernameLabel": {
+              "en": "E-mail address"
+            },
+            "usernamePlaceholder": {
+              "en": "john@doe.com"
+            },
+            "passwordLabel": {
+              "en": "Password"
+            },
+            "passwordPlaceholder": {
+              "en": "Password"
+            }
+          }
+        },
+        {
+          "id": "pincode",
+          "template": "pincode",
+          "options": {
+            "title": "Enter pincode:",
+            "hint": "Enter the device's pincode",
+            "type": "number",
+            "length": 4
+          }
+        },
+        {
           "id": "list_devices",
           "template": "list_devices",
           "navigation": {
