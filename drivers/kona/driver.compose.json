@@ -12,5 +12,33 @@
     "small": "{{driverAssetsPath}}/images/small.png",
     "large": "{{driverAssetsPath}}/images/large.png",
     "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
-  }
+  },
+  "connectivity": ["lan"],
+  "pair": [
+    {
+      "id": "login",
+      "template": "login_credentials",
+      "navigation": {
+        "next": "pincode"
+      }
+    },
+    {
+      "id": "pincode",
+      "template": "pincode",
+      "navigation": {
+        "next": "list_devices"
+      }
+    },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ]
 }
