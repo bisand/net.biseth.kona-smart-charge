@@ -17,7 +17,15 @@ class MyDevice extends Device {
     });
 
     try {
-      this._api = new KonaAPI(new BlueLinky({ this._settings.username, this._settings.password }));
+      const client: BlueLinky = new BlueLinky({
+        username: this._settings.username,
+        password: this._settings.password,
+        brand: 'hyundai',
+        region: 'EU',
+        pin: this._settings.pin
+      });
+
+      this._api = new KonaAPI(client);
       const vehicle = await this._api.getVehicle(this._settings.vin);
       const status: VehicleStatus = await vehicle.status({ parsed: true, refresh: false }) as VehicleStatus;
       this.setCapabilityValue('measure_battery', status.engine.batteryCharge).catch(this.error);
