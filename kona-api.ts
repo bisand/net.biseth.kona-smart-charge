@@ -1,16 +1,7 @@
 import BlueLinky from "bluelinky";
-import { Brand } from "bluelinky/dist/interfaces/common.interfaces";
 import EuropeanVehicle from "bluelinky/dist/vehicles/european.vehicle";
 import { Vehicle } from "bluelinky/dist/vehicles/vehicle";
-
-interface Config {
-    username: string;
-    password: string;
-    brand: Brand;
-    region: 'US' | 'CA' | 'EU';
-    pin?: string;
-
-}
+import { Config } from "./Config";
 
 class KonaAPI {
     static async testCredentials(config: Config): Promise<boolean> {
@@ -94,12 +85,14 @@ class KonaAPI {
 
     public async getVehicle(id: string): Promise<EuropeanVehicle> {
         const self = this;
-        return new Promise<EuropeanVehicle>((resolve, reject) => {
+        return new Promise<EuropeanVehicle>(async (resolve, reject) => {
             if (self._client === undefined)
                 reject('Login before using this method');
             try {
-                const vehicle = self._client.getVehicle(id);
-                if (vehicle)
+                console.log(id);
+                const vehicle: EuropeanVehicle | undefined = await self._client.getVehicle(id);
+                console.log(vehicle);
+                if (vehicle !== undefined)
                     resolve(vehicle);
                 reject('Unable to get vehicle.')
             } catch (error) {

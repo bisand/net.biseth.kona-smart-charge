@@ -2,6 +2,7 @@ import BlueLinky from 'bluelinky';
 import { VehicleStatus } from 'bluelinky/dist/interfaces/common.interfaces';
 import { Device } from 'homey';
 import KonaAPI from '../../kona-api';
+import { Config } from '../../Config';
 
 class MyDevice extends Device {
   private _settings: any;
@@ -17,20 +18,22 @@ class MyDevice extends Device {
     });
 
     try {
-      const client: BlueLinky = new BlueLinky({
+      const config: Config = {
         username: this._settings.username,
         password: this._settings.password,
         brand: 'hyundai',
         region: 'EU',
-        pin: this._settings.pin
-      });
+        pin: this._settings.pin.join('')
+      };
 
-      this._api = new KonaAPI(client);
+      this._api = await KonaAPI.login(config);
       const vehicle = await this._api.getVehicle(this._settings.vin);
-      const status: VehicleStatus = await vehicle.status({ parsed: true, refresh: false }) as VehicleStatus;
-      this.setCapabilityValue('measure_battery', status.engine.batteryCharge).catch(this.error);
+      if (vehicle) {
+        const status: VehicleStatus = await vehicle.status({ parsed: true, refresh: false }) as VehicleStatus;
+        this.setCapabilityValue('measure_battery', status.engine.batteryCharge).catch(this.error);
+      }
     } catch (error) {
-      this.error(error);
+      this.error('An error occurred while getting veichle status: ', error);
     }
 
     this.log('MyDevice has been initialized');
